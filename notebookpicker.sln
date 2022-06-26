@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "notebookpicker", "notebookpicker.csproj", "{2DCE33FD-A50D-4641-BDE3-9F55BD5A8ED7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DCE33FD-A50D-4641-BDE3-9F55BD5A8ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DCE33FD-A50D-4641-BDE3-9F55BD5A8ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DCE33FD-A50D-4641-BDE3-9F55BD5A8ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DCE33FD-A50D-4641-BDE3-9F55BD5A8ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F213A1B6-5AC9-4349-9C35-F21CE8567A4E}
+	EndGlobalSection
+EndGlobal
