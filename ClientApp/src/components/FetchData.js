@@ -17,19 +17,30 @@ export class FetchData extends Component {
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th>Name</th>
+            <th>CPU</th>
+            <th>GPU</th>
+            <th>Memory (GB)</th>
+            <th>Storage Type</th>
+            <th>Storage Capacity (GB)</th>
+            <th>Screen Type</th>
+            <th>Screen Resolution</th>
+            <th>Size</th>
+            <th>Weight (lbs)</th>
           </tr>
         </thead>
         <tbody>
           {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
+            <tr key={forecast.name}>
+              <td>{forecast.name}</td>
+              <td>{forecast.cpu}</td>
+              <td>{forecast.gpu}</td>
+              <td>{forecast.memory}</td>
+              <td>{forecast.strType}</td>
+              <td>{forecast.strSize}</td>
+              <td>{forecast.panelType}</td>
+              <td>{forecast.resolution}</td>
+              <td>{forecast.size}</td>
             </tr>
           )}
         </tbody>

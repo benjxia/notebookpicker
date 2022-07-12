@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
+using System.Data;
+using System;
 
 namespace notebookpicker.Controllers
 {
@@ -21,22 +24,42 @@ namespace notebookpicker.Controllers
         [HttpGet]
         public IEnumerable<Laptop> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new Laptop
+            string connectionString = "Data Source=.\\TEW_SQLEXPRESS;Initial Catalog=notebookpicker;Integrated Security=True";
+            string queryString = "SELECT * FROM NBINFO";
+            List<Laptop> output = new List<Laptop>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                ID = 69,
-                Name = "testName",
-                Release = "420",
-                CPU = "ur mom",
-                GPU = "ur dad",
-                Memory = 420,
-                StrType = "HDD",
-                StrSize = 69420,
-                PanelType = "TN",
-                Resolution = "480p",
-                AspRatio = "16:9",
-                Size = 15.6
-            })
-            .ToArray();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                
+                try
+                {
+                    while (reader.Read())
+                    {
+                        output.Add(new Laptop {
+                            ID = (long)reader["ID"],
+                            Brand = (string)reader["BRAND"],
+                            Name = (string)reader["NAME"],
+                            Release = (string)reader["RELEASE"],
+                            CPU = (string)reader["CPU"],
+                            GPU = (string)reader["GPU"],
+                            Memory = (int)reader["MEM"],
+                            StrType = (string)reader["STRTYPE"],
+                            StrSize = (int)reader["STRSIZE"],
+                            PanelType = (string)reader["PNTYPE"],
+                            Resolution = (string)reader["RESOLU"],
+                            AspRatio = (string)reader["ASPRATIO"],
+                            Size = (double)reader["SIZE"]
+                        });
+                    }
+                }
+                finally
+                {
+                    reader.Close();
+                }
+            }
+            return output;
         }
     }
 }
