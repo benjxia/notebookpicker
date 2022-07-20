@@ -5,14 +5,14 @@ export class FetchData extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+    this.state = { options: [], loading: true };
   }
 
   componentDidMount() {
-    this.populateWeatherData();
+    this.populateLaptopOptions();
   }
 
-  static renderForecastsTable(forecasts) {
+  static renderTable(options) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -30,17 +30,17 @@ export class FetchData extends Component {
           </tr>
         </thead>
         <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.name}>
-              <td>{forecast.name}</td>
-              <td>{forecast.cpu}</td>
-              <td>{forecast.gpu}</td>
-              <td>{forecast.memory}</td>
-              <td>{forecast.strType}</td>
-              <td>{forecast.strSize}</td>
-              <td>{forecast.panelType}</td>
-              <td>{forecast.resolution}</td>
-              <td>{forecast.size}</td>
+          {options.map(lp =>
+            <tr key={lp.name}>
+              <td>{lp.name}</td>
+              <td>{lp.cpu}</td>
+              <td>{lp.gpu}</td>
+              <td>{lp.memory}</td>
+              <td>{lp.strType}</td>
+              <td>{lp.strSize}</td>
+              <td>{lp.panelType}</td>
+              <td>{lp.resolution}</td>
+              <td>{lp.size}</td>
             </tr>
           )}
         </tbody>
@@ -51,20 +51,19 @@ export class FetchData extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
+      : FetchData.renderTable(this.state.options);
 
     return (
       <div>
-        <h1 id="tabelLabel" >Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
+        <h1 id="tabelLabel">Laptops</h1>
         {contents}
       </div>
     );
   }
 
-  async populateWeatherData() {
+  async populateLaptopOptions() {
     const response = await fetch('weatherforecast');
     const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
+    this.setState({ options: data, loading: false });
   }
 }
