@@ -25,7 +25,7 @@ export class FetchData extends Component {
             <th>Storage Capacity (GB)</th>
             <th>Screen Type</th>
             <th>Screen Resolution</th>
-            <th>Size</th>
+            <th>Display Size (Inches)</th>
             <th>Weight (lbs)</th>
           </tr>
         </thead>
@@ -41,6 +41,7 @@ export class FetchData extends Component {
               <td>{lp.panelType}</td>
               <td>{lp.resolution}</td>
               <td>{lp.size}</td>
+              <td>{lp.weight}</td>
             </tr>
           )}
         </tbody>
@@ -62,7 +63,7 @@ export class FetchData extends Component {
   }
 
   async populateLaptopOptions() {
-    const response = await fetch('weatherforecast');
+    const response = await fetch('notebookpicker');
     const data = await response.json();
     this.setState({ options: data, loading: false });
   }

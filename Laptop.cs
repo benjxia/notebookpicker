@@ -2,7 +2,7 @@ namespace notebookpicker
 {
     public class Laptop
     {
-        public long ID { get; set; }
+        public string ID { get; set; }
 
         public string Brand { get; set; }
 
@@ -14,11 +14,11 @@ namespace notebookpicker
 
         public string GPU { get; set; }
 
-        public int Memory { get; set; }
+        public decimal Memory { get; set; }
 
         public string StrType { get; set; }
 
-        public int StrSize { get; set; }
+        public decimal StrSize { get; set; }
 
         public string PanelType { get; set; }
 
@@ -26,8 +26,8 @@ namespace notebookpicker
 
         public string AspRatio { get; set; }
 
-        public double Size { get; set; }
+        public decimal Size { get; set; }
 
-        public double Weight { get; set; }
+        public decimal Weight { get; set; }
     }
 }

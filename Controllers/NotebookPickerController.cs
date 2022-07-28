@@ -6,16 +6,11 @@ namespace notebookpicker.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class NotebookPickerController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        private readonly ILogger<NotebookPickerController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public NotebookPickerController(ILogger<NotebookPickerController> logger)
         {
             _logger = logger;
         }
@@ -26,13 +21,38 @@ namespace notebookpicker.Controllers
             DotNetEnv.Env.Load();
             OracleConnection oconn = new OracleConnection();
             oconn.ConnectionString = Environment.GetEnvironmentVariable("CONNSTR");
-            oconn.Open();
             OracleCommand cmd = new OracleCommand("SELECT * FROM NBINFO", oconn);
+            oconn.Open();
             OracleDataReader rdr = cmd.ExecuteReader();
             Console.WriteLine(rdr.FieldCount);
+            List<Laptop> output = new List<Laptop>();
+            try {
+                while (rdr.Read()) {
+                    output.Add(new Laptop {
+                        ID = (string)rdr["LPID"],
+                        Name = (string)rdr["NAME"],
+                        Brand = (string)rdr["BRAND"],
+                        Release = (string)rdr["RELEASE"],
+                        CPU = (string)rdr["CPU"],
+                        GPU = (string)rdr["GPU"],
+                        Memory = (decimal)rdr["MEM"],
+                        StrType = (string)rdr["STRTYPE"],
+                        StrSize = (decimal)rdr["STRSIZE"],
+                        PanelType = (string)rdr["PNTYPE"],
+                        Resolution = (string)rdr["RESOLU"],
+                        AspRatio = (string)rdr["ASPRATIO"],
+                        Size = (decimal)rdr["SZ"],
+                        Weight = (decimal)rdr["WEIGHT"]
+                    });
+                 }
+            }
+            finally {
+                rdr.Close();
+            }
+            
             // string connectionString = "Data Source=.\\TEW_SQLEXPRESS;Initial Catalog=notebookpicker;Integrated Security=True";
             // string queryString = "SELECT * FROM NBINFO";
-            List<Laptop> output = new List<Laptop>();
+
             // using (SqlConnection connection = new SqlConnection(connectionString))
             // {
             //     SqlCommand command = new SqlCommand(queryString, connection);
