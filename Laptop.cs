@@ -29,5 +29,8 @@ namespace notebookpicker
         public decimal Size { get; set; }
 
         public decimal Weight { get; set; }
+        
+        public string ImgP { get; set; }
+        
     }
 }
