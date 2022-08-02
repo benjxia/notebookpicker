@@ -5,7 +5,7 @@ using DotNetEnv;
 namespace notebookpicker.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/products")]
     public class NotebooksController : ControllerBase
     {
         private readonly ILogger<NotebooksController> _logger;

@@ -32,7 +32,7 @@ export class Products extends Component {
         <tbody>
           {options.map(lp =>
             <tr key={lp.name}>
-              <td><img src = {lp.imgP} alt = "laptop"/> {lp.name}</td>
+              <td><img src = {lp.imgP} alt = "laptop" height = {50} width = {50}/> {lp.name}</td>
               <td>{lp.cpu}</td>
               <td>{lp.gpu}</td>
               <td>{lp.memory}</td>
@@ -63,7 +63,7 @@ export class Products extends Component {
   }
 
   async populateLaptopOptions() {
-    const response = await fetch('notebooks');
+    const response = await fetch('api/products');
     const data = await response.json();
     this.setState({ options: data, loading: false });
   }
