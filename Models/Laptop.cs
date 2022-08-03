@@ -1,8 +1,8 @@
-namespace notebookpicker
+namespace notebookpicker.Models
 {
     public class Laptop
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         public string Brand { get; set; }
 
@@ -10,9 +10,9 @@ namespace notebookpicker
 
         public string Release { get; set; }
 
-        public string CPU { get; set; }
+        public string Cpu { get; set; }
 
-        public string GPU { get; set; }
+        public string Gpu { get; set; }
 
         public decimal Memory { get; set; }
 
@@ -32,5 +32,6 @@ namespace notebookpicker
         
         public string ImgP { get; set; }
         
+        public decimal MinPrice { get; set; }
     }
 }

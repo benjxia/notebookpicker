@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Oracle.ManagedDataAccess.Client;
+using notebookpicker.Models;
 using DotNetEnv;
 
 namespace notebookpicker.Controllers
@@ -21,19 +22,22 @@ namespace notebookpicker.Controllers
             DotNetEnv.Env.Load(); // Necessary line or it won't connect to DB
             OracleConnection oconn = new OracleConnection();
             oconn.ConnectionString = Environment.GetEnvironmentVariable("CONNSTR");
-            OracleCommand cmd = new OracleCommand("SELECT * FROM NBINFO", oconn);
+            OracleCommand sel = new OracleCommand("SELECT * FROM NBINFO", oconn);
             oconn.Open();
-            OracleDataReader rdr = cmd.ExecuteReader();
+            OracleDataReader rdr = sel.ExecuteReader();
             List<Laptop> output = new List<Laptop>();
             try {
                 while (rdr.Read()) {
+                    OracleCommand seller = new OracleCommand($"SELECT MIN(PRICE) AS PRICE FROM NBSELLER WHERE LPID = {rdr["LPID"]}", oconn);
+                    OracleDataReader rdr2 = seller.ExecuteReader();
+                    rdr2.Read();
                     output.Add(new Laptop {
-                        ID = (string)rdr["LPID"],
+                        Id = (string)rdr["LPID"],
                         Name = (string)rdr["NAME"],
                         Brand = (string)rdr["BRAND"],
                         Release = (string)rdr["RELEASE"],
-                        CPU = (string)rdr["CPU"],
-                        GPU = (string)rdr["GPU"],
+                        Cpu = (string)rdr["CPU"],
+                        Gpu = (string)rdr["GPU"],
                         Memory = (decimal)rdr["MEM"],
                         StrType = (string)rdr["STRTYPE"],
                         StrSize = (decimal)rdr["STRSIZE"],
@@ -42,8 +46,10 @@ namespace notebookpicker.Controllers
                         AspRatio = (string)rdr["ASPRATIO"],
                         Size = (decimal)rdr["SZ"],
                         Weight = (decimal)rdr["WEIGHT"],
-                        ImgP = DBNull.Value.Equals(rdr["IMG_P"]) ? "" : (string)rdr["IMG_P"]
+                        ImgP = DBNull.Value.Equals(rdr["IMG_P"]) ? "" : (string)rdr["IMG_P"],
+                        MinPrice = !rdr2.HasRows || DBNull.Value.Equals(rdr2["PRICE"]) ? 0 : (decimal)rdr2["PRICE"]
                     });
+                    rdr2.Close();
                 }
             }
             finally {
