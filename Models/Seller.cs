@@ -9,6 +9,8 @@ namespace notebookpicker.Models
         public decimal? Price { get; set; }
         public string? Sellername { get; set; }
         public string? Url { get; set; }
+        public string Id { get; set; } = null!;
+        public string? Img { get; set; }
 
         public virtual Laptop Lp { get; set; } = null!;
     }

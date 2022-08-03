@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using DotNetEnv;
+using notebookpicker.Models;
 
-namespace notebookpicker.Models
+namespace notebookpicker.Data
 {
     public partial class LaptopContext : DbContext
     {
@@ -18,8 +19,8 @@ namespace notebookpicker.Models
         }
 
         public virtual DbSet<Img> Imgs { get; set; } = null!;
-        public virtual DbSet<Laptop> Nbinfos { get; set; } = null!;
-        public virtual DbSet<Seller> Nbsellers { get; set; } = null!;
+        public virtual DbSet<Laptop> Laptops { get; set; } = null!;
+        public virtual DbSet<Seller> Sellers { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,7 +28,7 @@ namespace notebookpicker.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 DotNetEnv.Env.Load(); // Necessary line or it won't connect to DB
-                optionsBuilder.UseOracle(Environment.GetEnvironmentVariable("CONNSTR_ALT").ToString());
+                optionsBuilder.UseOracle(Environment.GetEnvironmentVariable("CONNSTR").ToString());
             }
         }
 
@@ -38,13 +39,15 @@ namespace notebookpicker.Models
 
             modelBuilder.Entity<Img>(entity =>
             {
-                entity.HasKey(e => e.Lpid)
-                    .HasName("IMG_P_PK");
-
                 entity.ToTable("IMG_S");
 
+                entity.Property(e => e.Id)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
+
                 entity.Property(e => e.Lpid)
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("LPID");
 
@@ -54,20 +57,19 @@ namespace notebookpicker.Models
                     .HasColumnName("SRC");
 
                 entity.HasOne(d => d.Lp)
-                    .WithOne(p => p.Img)
-                    .HasForeignKey<Img>(d => d.Lpid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .WithMany(p => p.Imgs)
+                    .HasForeignKey(d => d.Lpid)
                     .HasConstraintName("IMG_P_NBINFO_LPID_FK");
             });
 
             modelBuilder.Entity<Laptop>(entity =>
             {
-                entity.HasKey(e => e.Lpid)
+                entity.HasKey(e => e.Id)
                     .HasName("NBINFO_PK");
 
                 entity.ToTable("NBINFO");
 
-                entity.Property(e => e.Lpid)
+                entity.Property(e => e.Id)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("LPID");
@@ -97,7 +99,7 @@ namespace notebookpicker.Models
                     .IsUnicode(false)
                     .HasColumnName("IMG_P");
 
-                entity.Property(e => e.Mem)
+                entity.Property(e => e.Memory)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("MEM");
 
@@ -106,7 +108,7 @@ namespace notebookpicker.Models
                     .IsUnicode(false)
                     .HasColumnName("NAME");
 
-                entity.Property(e => e.Pntype)
+                entity.Property(e => e.PanelType)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("PNTYPE");
@@ -116,21 +118,21 @@ namespace notebookpicker.Models
                     .IsUnicode(false)
                     .HasColumnName("RELEASE");
 
-                entity.Property(e => e.Resolu)
+                entity.Property(e => e.Resolution)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("RESOLU");
 
-                entity.Property(e => e.Strsize)
+                entity.Property(e => e.StrSize)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("STRSIZE");
 
-                entity.Property(e => e.Strtype)
+                entity.Property(e => e.StrType)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("STRTYPE");
 
-                entity.Property(e => e.Sz)
+                entity.Property(e => e.Size)
                     .HasColumnType("FLOAT")
                     .HasColumnName("SZ");
 
@@ -141,31 +143,39 @@ namespace notebookpicker.Models
 
             modelBuilder.Entity<Seller>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("NBSELLER");
 
+                entity.Property(e => e.Id)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Img)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("IMG");
+
                 entity.Property(e => e.Lpid)
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("LPID");
 
                 entity.Property(e => e.Price)
-                    .HasColumnType("NUMBER(38)")
+                    .HasColumnType("FLOAT")
                     .HasColumnName("PRICE");
 
                 entity.Property(e => e.Sellername)
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("SELLERNAME");
 
                 entity.Property(e => e.Url)
-                    .HasMaxLength(128)
+                    .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("URL");
 
                 entity.HasOne(d => d.Lp)
-                    .WithMany()
+                    .WithMany(p => p.Nbsellers)
                     .HasForeignKey(d => d.Lpid)
                     .HasConstraintName("NBSELLER_FK1");
             });

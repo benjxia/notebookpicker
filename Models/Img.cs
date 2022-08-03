@@ -5,9 +5,9 @@ namespace notebookpicker.Models
 {
     public partial class Img
     {
-        public string Lpid { get; set; } = null!;
+        public string? Lpid { get; set; }
         public string? Src { get; set; }
-
-        public virtual Laptop Lp { get; set; } = null!;
+        public string Id { get; set; } = null!;
+        public virtual Laptop? Lp { get; set; }
     }
 }
