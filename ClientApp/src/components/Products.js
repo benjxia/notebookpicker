@@ -27,6 +27,7 @@ export class Products extends Component {
             <th>Screen Resolution</th>
             <th>Display Size (Inches)</th>
             <th>Weight (lbs)</th>
+            <th>Price (USD)</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +43,7 @@ export class Products extends Component {
               <td>{lp.resolution}</td>
               <td>{lp.size}</td>
               <td>{lp.weight}</td>
+              <td>{lp.minPrice === 0 ? "N/A" : "$" + lp.minPrice.toFixed(2)}</td>
             </tr>
           )}
         </tbody>

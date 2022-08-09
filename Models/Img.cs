@@ -1,10 +1,13 @@
-namespace notebookpicker.Models;
+﻿using System;
+using System.Collections.Generic;
 
-public class Img
+namespace notebookpicker.Models
 {
-    public string Id { get; set; }
-    
-    public string Lpid { get; set; }
-    
-    public string Src { get; set; }
+    public partial class Img
+    {
+        public string? Lpid { get; set; }
+        public string? Src { get; set; }
+        public string Id { get; set; } = null!;
+        public virtual Laptop? Lp { get; set; }
+    }
 }

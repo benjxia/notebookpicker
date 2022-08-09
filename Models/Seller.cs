@@ -1,14 +1,17 @@
-namespace notebookpicker.Models;
+﻿using System;
+using System.Collections.Generic;
 
-public class Seller
+namespace notebookpicker.Models
 {
-    public string Id { get; set; }
-    
-    public string Lpid { get; set; }
-    
-    public decimal Price { get; set; }
-    
-    public string Name { get; set; }
-    
-    public string Url { get; set; }
+    public partial class Seller
+    {
+        public string Lpid { get; set; } = null!;
+        public decimal? Price { get; set; }
+        public string? Sellername { get; set; }
+        public string? Url { get; set; }
+        public string Id { get; set; } = null!;
+        public string? Img { get; set; }
+
+        public virtual Laptop Lp { get; set; } = null!;
+    }
 }
