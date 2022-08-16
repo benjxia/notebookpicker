@@ -11,7 +11,6 @@ namespace notebookpicker.Models
         public string? Url { get; set; }
         public string Id { get; set; } = null!;
         public string? Img { get; set; }
-
         public virtual Laptop Lp { get; set; } = null!;
     }
 }

@@ -27,9 +27,8 @@ namespace notebookpicker.Models
         public decimal? StrSize { get; set; }
         public string? Name { get; set; }
         public string? ImgP { get; set; }
-        
         [NotMapped]
-        public decimal? minPrice { get; set; } 
+        public decimal? MinPrice { get; set; } = 0;
         public virtual ICollection<Img> Imgs { get; set; }
         public virtual ICollection<Seller> Nbsellers { get; set; }
     }

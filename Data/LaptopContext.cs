@@ -59,7 +59,8 @@ namespace notebookpicker.Data
                 entity.HasOne(d => d.Lp)
                     .WithMany(p => p.Imgs)
                     .HasForeignKey(d => d.Lpid)
-                    .HasConstraintName("IMG_P_NBINFO_LPID_FK");
+                    .HasConstraintName("IMG_P_NBINFO_LPID_FK")
+                    .IsRequired();
             });
 
             modelBuilder.Entity<Laptop>(entity =>
@@ -177,7 +178,8 @@ namespace notebookpicker.Data
                 entity.HasOne(d => d.Lp)
                     .WithMany(p => p.Nbsellers)
                     .HasForeignKey(d => d.Lpid)
-                    .HasConstraintName("NBSELLER_FK1");
+                    .HasConstraintName("NBSELLER_FK1")
+                    .IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);
