@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Oracle.ManagedDataAccess.Client;
-using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using notebookpicker.Data;
 using notebookpicker.Models;
+using System;
 
 namespace notebookpicker.Controllers
 {
@@ -24,8 +23,8 @@ namespace notebookpicker.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="br"></param>
-        /// <param name="rel"></param>
+        /// <param name="br">Brand</param>
+        /// <param name="rel">Release</param>
         /// <param name="cpu"></param>
         /// <param name="gpu"></param>
         /// <param name="strtype"></param>
@@ -36,14 +35,14 @@ namespace notebookpicker.Controllers
         /// <param name="maxsize"></param>
         /// <param name="minweight"></param>
         /// <param name="maxweight"></param>
-        /// <param name="minmem"></param>
-        /// <param name="maxmem"></param>
-        /// <param name="minss"></param>
-        /// <param name="maxss"></param>
-        /// <param name="name"></param>
-        /// <param name="minprice"></param>
-        /// <param name="maxprice"></param>
-        /// <returns></returns>
+        /// <param name="minmem">Minimum memory</param>
+        /// <param name="maxmem">Maximum memory</param>
+        /// <param name="minss">Minimum storage size</param>
+        /// <param name="maxss">Maximum storage size</param>
+        /// <param name="search">Query from search bar</param>
+        /// <param name="minprice">Minimum price</param>
+        /// <param name="maxprice">Maximum price</param>
+        /// <returns>Enumerable of all qualifying items</returns>
         [HttpGet]
         // holy shit thats a lot of filters
         public IEnumerable<Laptop> Get(string? br, string? rel, string? cpu,
@@ -51,54 +50,57 @@ namespace notebookpicker.Controllers
             string? aspratio, decimal? minsize, decimal? maxsize, 
             decimal? minweight, decimal? maxweight, 
             decimal? minmem, decimal? maxmem, decimal? minss, decimal? maxss, 
-            string? name, decimal? minprice, decimal? maxprice)
+            string? search, decimal? minprice, decimal? maxprice)
 
         {
             IQueryable<Laptop> laptops = _context.Laptops.Include(l => l.Nbsellers).AsQueryable();
 
             if (br != null)
             {
-                laptops = laptops.Where(x => x.Brand == br);
+                List<string> brands = br.Split(',').ToList();
+                laptops = laptops.Where(x => brands.Contains(x.Brand));
             }
 
             if (rel != null)
             {
-                laptops = laptops.Where(x => x.Release == rel);
+                List<string> releases = rel.Split(',').ToList();
+                laptops = laptops.Where(x => releases.Contains(x.Release));
             }
 
             if (cpu != null)
             {
-                laptops = laptops.Where(x => x.Cpu == cpu);
+                List<string> cpus = cpu.Split(',').ToList();
+                laptops = laptops.Where(x => cpus.Contains(x.Cpu));
             }
-            
-            if (cpu != null)
-            {
-                laptops = laptops.Where(x => x.Cpu == cpu);
-            }
-            
+
             if (gpu != null)
             {
-                laptops = laptops.Where(x => x.Gpu == gpu);
+                List<string> gpus = gpu.Split(',').ToList();
+                laptops = laptops.Where(x => gpus.Contains(x.Gpu));
             }
             
             if (strtype != null)
             {
-                laptops = laptops.Where(x => x.StrType == strtype);
+                List<string> strtypes = strtype.Split(',').ToList();
+                laptops = laptops.Where(x => strtypes.Contains(x.StrType));
             }
             
             if (pantype != null)
             {
-                laptops = laptops.Where(x => x.PanelType == pantype);
+                List<string> pantypes = pantype.Split(',').ToList();
+                laptops = laptops.Where(x => pantypes.Contains(x.PanelType));
             }
             
             if (resolu != null)
             {
-                laptops = laptops.Where(x => x.Resolution == resolu);
+                List<string> resolutions = resolu.Split(',').ToList();
+                laptops = laptops.Where(x => resolutions.Contains(x.Resolution));
             }
             
             if (aspratio != null)
             {
-                laptops = laptops.Where(x => x.Aspratio == aspratio);
+                List<string> aspratios = aspratio.Split(',').ToList();
+                laptops = laptops.Where(x => aspratios.Contains(x.Aspratio));
             }
             
             if (minsize != null)
@@ -141,8 +143,6 @@ namespace notebookpicker.Controllers
                 laptops = laptops.Where(x => x.StrSize <= maxss);
             }
             
-            // TODO: name filtering
-
             List<Laptop> output = laptops.ToList();
             foreach (Laptop i in output.ToList())
             {
@@ -160,6 +160,8 @@ namespace notebookpicker.Controllers
                     }
                 }
 
+                // Filter stuff that can't be done with sql easily
+                
                 if (minprice != null && (i.MinPrice < minprice || i.MinPrice == 0))
                 {
                     output.Remove(i);
@@ -167,6 +169,11 @@ namespace notebookpicker.Controllers
                 }
 
                 if (maxprice != null && (i.MinPrice > maxprice || i.MinPrice == 0))
+                {
+                    output.Remove(i);
+                }
+
+                if (search != null && !i.SearchMatch(search))
                 {
                     output.Remove(i);
                 }

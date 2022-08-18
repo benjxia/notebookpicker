@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace notebookpicker.Models
 {
@@ -31,5 +32,25 @@ namespace notebookpicker.Models
         public decimal? MinPrice { get; set; } = 0;
         public virtual ICollection<Img> Imgs { get; set; }
         public virtual ICollection<Seller> Nbsellers { get; set; }
+
+        /// <summary>
+        /// Returns whether laptop matches description of search query
+        /// </summary>
+        /// <param name="searchQuery">Search query to parse/match</param>
+        /// <returns>True if seach query matches laptop, false otherwise</returns>
+        public bool SearchMatch(string searchQuery)
+        {
+            List<string> queries = searchQuery.ToLower().Split(' ').ToList();
+            string match = string.Join(' ', this.Name, this.Brand, this.Cpu, this.Gpu, this.Release).ToLower();
+            
+            foreach (string i in queries)
+            {
+                if (!match.Contains(i))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace notebookpicker.Data
         public virtual DbSet<Img> Imgs { get; set; } = null!;
         public virtual DbSet<Laptop> Laptops { get; set; } = null!;
         public virtual DbSet<Seller> Sellers { get; set; } = null!;
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
