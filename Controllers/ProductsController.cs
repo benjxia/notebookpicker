@@ -24,21 +24,124 @@ namespace notebookpicker.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="b">Brand</param>
-        /// <param name="r">Release</param>
-        /// <param name="c">CPU</param>
-        /// <param name="g">GPU</param>
-        /// <param name="st">Storage Type (StrType)</param>
-        /// <param name="pt">Panel Type (PNType)</param>
-        /// 
+        /// <param name="br"></param>
+        /// <param name="rel"></param>
+        /// <param name="cpu"></param>
+        /// <param name="gpu"></param>
+        /// <param name="strtype"></param>
+        /// <param name="pantype"></param>
+        /// <param name="resolu"></param>
+        /// <param name="aspratio"></param>
+        /// <param name="minsize"></param>
+        /// <param name="maxsize"></param>
+        /// <param name="minweight"></param>
+        /// <param name="maxweight"></param>
+        /// <param name="minmem"></param>
+        /// <param name="maxmem"></param>
+        /// <param name="minss"></param>
+        /// <param name="maxss"></param>
+        /// <param name="name"></param>
+        /// <param name="minprice"></param>
+        /// <param name="maxprice"></param>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Laptop> Get(string? b, string? r, string? c, 
-            string? g, string? st, string? pt)
+        // holy shit thats a lot of filters
+        public IEnumerable<Laptop> Get(string? br, string? rel, string? cpu,
+            string? gpu, string? strtype, string? pantype, string? resolu,
+            string? aspratio, decimal? minsize, decimal? maxsize, 
+            decimal? minweight, decimal? maxweight, 
+            decimal? minmem, decimal? maxmem, decimal? minss, decimal? maxss, 
+            string? name, decimal? minprice, decimal? maxprice)
+
         {
-            List<Laptop> Laptops = _context.Laptops
-                .Include(l => l.Nbsellers).ToList();
-            foreach (Laptop i in Laptops)
+            IQueryable<Laptop> laptops = _context.Laptops.Include(l => l.Nbsellers).AsQueryable();
+
+            if (br != null)
+            {
+                laptops = laptops.Where(x => x.Brand == br);
+            }
+
+            if (rel != null)
+            {
+                laptops = laptops.Where(x => x.Release == rel);
+            }
+
+            if (cpu != null)
+            {
+                laptops = laptops.Where(x => x.Cpu == cpu);
+            }
+            
+            if (cpu != null)
+            {
+                laptops = laptops.Where(x => x.Cpu == cpu);
+            }
+            
+            if (gpu != null)
+            {
+                laptops = laptops.Where(x => x.Gpu == gpu);
+            }
+            
+            if (strtype != null)
+            {
+                laptops = laptops.Where(x => x.StrType == strtype);
+            }
+            
+            if (pantype != null)
+            {
+                laptops = laptops.Where(x => x.PanelType == pantype);
+            }
+            
+            if (resolu != null)
+            {
+                laptops = laptops.Where(x => x.Resolution == resolu);
+            }
+            
+            if (aspratio != null)
+            {
+                laptops = laptops.Where(x => x.Aspratio == aspratio);
+            }
+            
+            if (minsize != null)
+            {
+                laptops = laptops.Where(x => x.Size >= minsize);
+            }
+            
+            if (maxsize != null)
+            {
+                laptops = laptops.Where(x => x.Size <= maxsize);
+            }
+            
+            if (minweight != null)
+            {
+                laptops = laptops.Where(x => x.Weight >= minweight);
+            }
+            
+            if (maxweight != null)
+            {
+                laptops = laptops.Where(x => x.Weight <= maxweight);
+            }
+            
+            if (minmem != null)
+            {
+                laptops = laptops.Where(x => x.Memory >= minmem);
+            }
+            
+            if (maxmem != null)
+            {
+                laptops = laptops.Where(x => x.Memory <= maxmem);
+            }
+            
+            if (minss != null)
+            {
+                laptops = laptops.Where(x => x.StrSize >= minss);
+            }
+            
+            if (maxss != null)
+            {
+                laptops = laptops.Where(x => x.StrSize <= maxss);
+            }
+            
+            foreach (Laptop i in laptops)
             {
                 // Do manual price filtering here somewhere
                 if (i.Nbsellers.Count() > 0)
@@ -53,9 +156,19 @@ namespace notebookpicker.Controllers
                         }
                     }
                 }
+
+                if (minprice != null)
+                {
+                    
+                }
+
+                if (maxprice != null)
+                {
+                    
+                }
             }
-            
-            return Laptops;
+
+            return laptops;
         }
     }
 }
