@@ -141,7 +141,10 @@ namespace notebookpicker.Controllers
                 laptops = laptops.Where(x => x.StrSize <= maxss);
             }
             
-            foreach (Laptop i in laptops)
+            // TODO: name filtering
+
+            List<Laptop> output = laptops.ToList();
+            foreach (Laptop i in output.ToList())
             {
                 // Do manual price filtering here somewhere
                 if (i.Nbsellers.Count() > 0)
@@ -157,18 +160,19 @@ namespace notebookpicker.Controllers
                     }
                 }
 
-                if (minprice != null)
+                if (minprice != null && (i.MinPrice < minprice || i.MinPrice == 0))
                 {
-                    
+                    output.Remove(i);
+                    continue;
                 }
 
-                if (maxprice != null)
+                if (maxprice != null && (i.MinPrice > maxprice || i.MinPrice == 0))
                 {
-                    
+                    output.Remove(i);
                 }
             }
 
-            return laptops;
+            return output;
         }
     }
 }
