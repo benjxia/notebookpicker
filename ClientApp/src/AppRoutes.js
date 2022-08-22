@@ -9,6 +9,10 @@ const AppRoutes = [
   {
     path: '/products',
     element: <Products />
+  },
+  {
+    path: '/product'
+    
   }
 ];
 

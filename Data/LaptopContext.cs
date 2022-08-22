@@ -62,6 +62,46 @@ namespace notebookpicker.Data
                     .HasConstraintName("IMG_P_NBINFO_LPID_FK")
                     .IsRequired();
             });
+            
+            modelBuilder.Entity<Seller>(entity =>
+            {
+                entity.ToTable("NBSELLER");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Img)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("IMG");
+
+                entity.Property(e => e.Lpid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("LPID");
+
+                entity.Property(e => e.Price)
+                    .HasColumnType("FLOAT")
+                    .HasColumnName("PRICE");
+
+                entity.Property(e => e.Sellername)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SELLERNAME");
+
+                entity.Property(e => e.Url)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("URL");
+
+                entity.HasOne(d => d.Lp)
+                    .WithMany(p => p.Nbsellers)
+                    .HasForeignKey(d => d.Lpid)
+                    .HasConstraintName("NBSELLER_FK1")
+                    .IsRequired();
+            });
 
             modelBuilder.Entity<Laptop>(entity =>
             {
@@ -140,46 +180,7 @@ namespace notebookpicker.Data
                 entity.Property(e => e.Weight)
                     .HasColumnType("FLOAT")
                     .HasColumnName("WEIGHT");
-            });
-
-            modelBuilder.Entity<Seller>(entity =>
-            {
-                entity.ToTable("NBSELLER");
-
-                entity.Property(e => e.Id)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.Img)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("IMG");
-
-                entity.Property(e => e.Lpid)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("LPID");
-
-                entity.Property(e => e.Price)
-                    .HasColumnType("FLOAT")
-                    .HasColumnName("PRICE");
-
-                entity.Property(e => e.Sellername)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("SELLERNAME");
-
-                entity.Property(e => e.Url)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("URL");
-
-                entity.HasOne(d => d.Lp)
-                    .WithMany(p => p.Nbsellers)
-                    .HasForeignKey(d => d.Lpid)
-                    .HasConstraintName("NBSELLER_FK1")
-                    .IsRequired();
+                
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -54,7 +54,7 @@ namespace notebookpicker.Controllers
 
         {
             IQueryable<Laptop> laptops = _context.Laptops.Include(l => l.Nbsellers).AsQueryable();
-
+            // laptops = laptops.
             if (br != null)
             {
                 List<string> brands = br.Split(',').ToList();
@@ -142,43 +142,29 @@ namespace notebookpicker.Controllers
             {
                 laptops = laptops.Where(x => x.StrSize <= maxss);
             }
-            
-            List<Laptop> output = laptops.ToList();
-            foreach (Laptop i in output.ToList())
+
+            if (maxprice != null)
             {
-                // Do manual price filtering here somewhere
-                if (i.Nbsellers.Count() > 0)
-                {
-                    // Get minimum price for each product
-                    i.MinPrice = Decimal.MaxValue;
-                    foreach (Seller j in i.Nbsellers)
-                    {
-                        if (j.Price < i.MinPrice)
-                        {
-                            i.MinPrice = j.Price;
-                        }
-                    }
-                }
-
-                // Filter stuff that can't be done with sql easily
-                
-                if (minprice != null && (i.MinPrice < minprice || i.MinPrice == 0))
-                {
-                    output.Remove(i);
-                    continue;
-                }
-
-                if (maxprice != null && (i.MinPrice > maxprice || i.MinPrice == 0))
-                {
-                    output.Remove(i);
-                }
-
-                if (search != null && !i.SearchMatch(search))
-                {
-                    output.Remove(i);
-                }
+                laptops = laptops.Where(x => x.Nbsellers.Min(y => y.Price) <= maxprice);
             }
 
+            if (minprice != null)
+            {
+                laptops = laptops.Where(x => x.Nbsellers.Min(y => y.Price) >= minprice);
+            }
+
+            if (search != null)
+            {
+                List<string> queries = search.ToLower().Split(' ').ToList();
+
+                foreach (string i in queries)
+                {
+                    laptops = laptops = laptops.Where(x => (x.Name.ToLower().Contains(i)) || x.Brand.ToLower().Contains(i) || x.Cpu.ToLower().Contains(i) || x.Gpu.ToLower().Contains(i) || x.Release.ToLower().Contains(i));
+                }
+            }
+            
+            List<Laptop> output = laptops.ToList();
+            
             return output;
         }
     }

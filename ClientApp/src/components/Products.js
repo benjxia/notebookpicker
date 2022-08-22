@@ -5,7 +5,7 @@ export class Products extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { options: [], loading: true };
+    this.state = { options: [], loading: true, filters: []};
   }
 
   componentDidMount() {
@@ -43,7 +43,7 @@ export class Products extends Component {
               <td>{lp.resolution}</td>
               <td>{lp.size}</td>
               <td>{lp.weight}</td>
-              <td>{lp.minPrice === 0 ? "N/A" : "$" + lp.minPrice.toFixed(2)}</td>
+              <td>{lp.nbsellers.length === 0 ? "N/A" : "$" + lp.nbsellers.reduce((min, p) => p.price < min ? p.price : min, lp.nbsellers[0].price).toFixed(2)}</td>
             </tr>
           )}
         </tbody>
@@ -65,7 +65,7 @@ export class Products extends Component {
   }
 
   async populateLaptopOptions() {
-    const response = await fetch('api/products');
+    const response = await fetch('api/products?');
     const data = await response.json();
     this.setState({ options: data, loading: false });
   }

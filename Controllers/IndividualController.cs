@@ -24,7 +24,6 @@ public class IndividualController : ControllerBase
     {
         return _context.Laptops.Include(l => l.Nbsellers).Include(l => l.Imgs)
             .Where(x => x.Id == id).FirstOrDefault();
-
     }
     
 }
