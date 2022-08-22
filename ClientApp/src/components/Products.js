@@ -41,7 +41,7 @@ export class Products extends Component {
               <td>{lp.strSize}</td>
               <td>{lp.panelType}</td>
               <td>{lp.resolution}</td>
-              <td>{lp.size}</td>
+              <td>{lp.size.toFixed(1)}</td>
               <td>{lp.weight}</td>
               <td>{lp.nbsellers.length === 0 ? "N/A" : "$" + lp.nbsellers.reduce((min, p) => p.price < min ? p.price : min, lp.nbsellers[0].price).toFixed(2)}</td>
             </tr>

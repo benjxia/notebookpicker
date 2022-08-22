@@ -156,16 +156,18 @@ namespace notebookpicker.Controllers
             if (search != null)
             {
                 List<string> queries = search.ToLower().Split(' ').ToList();
-
+                
                 foreach (string i in queries)
                 {
-                    laptops = laptops = laptops.Where(x => (x.Name.ToLower().Contains(i)) || x.Brand.ToLower().Contains(i) || x.Cpu.ToLower().Contains(i) || x.Gpu.ToLower().Contains(i) || x.Release.ToLower().Contains(i));
+                    laptops = laptops = laptops.Where(x => x.Name.ToLower().Contains(i) || 
+                        x.Brand.ToLower().Contains(i) || 
+                        x.Cpu.ToLower().Contains(i) || 
+                        x.Gpu.ToLower().Contains(i) || 
+                        x.Release.ToLower().Contains(i));
                 }
             }
-            
-            List<Laptop> output = laptops.ToList();
-            
-            return output;
+
+            return laptops;
         }
     }
 }
