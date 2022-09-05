@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ProductTable } from "./ProdComp/ProductTable";
+import { ProductTable } from './ProdComp/ProductTable';
 import "./styles/Productsv2.css";
 
 export class Productsv2 extends Component {
@@ -61,8 +61,7 @@ export class Productsv2 extends Component {
     return (
       <div>
         <h1 id="tabelLabel">Select Laptops version 2</h1>
-        <ProductTable products={this.state.products}/>
-        {/* {contents} */}
+        <ProductTable products = {this.state.products}/>
       </div>
     );
   }
