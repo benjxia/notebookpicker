@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from '../assets/branding/nbpicker.png';
 import { Link } from 'react-router-dom';
 import { Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
-import "./NavBar.css";
+import "./styles/NavBar.css";
 
 export class NavBar extends Component {
   static displayName = NavBar.name;
@@ -23,7 +23,7 @@ export class NavBar extends Component {
           <NavbarBrand href="/" className="button"> NotebookPicker </NavbarBrand>
           <NavItem>
             <NavLink tag={Link} className="button" to="/products">
-              Browse Products
+              Browse
             </NavLink>
           </NavItem>
         </Navbar>
