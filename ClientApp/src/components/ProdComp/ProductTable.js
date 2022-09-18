@@ -1,6 +1,4 @@
-// import * as React from 'react';
 import React, { Component } from 'react';
-import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import "../styles/Productsv2.css"
 
@@ -15,10 +13,12 @@ export class ProductTable extends Component {
             {
                 field: 'name',
                 headerName: 'Name',
-                width: 300,
+                width: 250,
                 headerClassName: 'product-table-header',
                 renderCell: (params) => {
-                    return <div><img src = {params.row.imgP} alt = "laptop" height = {50} width = {50}/>{params.value}</div>
+                    return <div>
+                            <img src = {params.row.imgP} alt = "laptop" height = {50} width = {50}/>{params.value}
+                           </div>
                 }
             },
             {
@@ -36,7 +36,7 @@ export class ProductTable extends Component {
             {
                 field: 'memory',
                 headerName: 'Memory (GB)',
-                width: 80,
+                width: 100,
                 headerClassName: 'product-table-header',
                 type: 'number',
             },
@@ -49,7 +49,7 @@ export class ProductTable extends Component {
             {
                 field: 'strSize',
                 headerName: 'Storage (GB)',
-                width: 80,
+                width: 100,
                 headerClassName: 'product-table-header',
                 type: 'number',
             },
@@ -68,7 +68,7 @@ export class ProductTable extends Component {
             {
                 field: 'size',
                 headerName: 'Size (in.)',
-                width: 60,
+                width: 80,
                 headerClassName: 'product-table-header',
                 type: 'number',
                 renderCell: (params) => {
@@ -95,7 +95,7 @@ export class ProductTable extends Component {
 
         var rows = this.props.products
         return (
-            <div style = {{height: 1200, width: '100%'}}>
+            <div style = {{height: 800, width: '100%'}}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -104,7 +104,7 @@ export class ProductTable extends Component {
                     disableSelectionOnClick
                     disableColumnFilter
                     disableColumnSelector
-                    experimentalFeatures={{ newEditingApi: true }}
+                    // experimentalFeatures={{ newEditingApi: true }}
                 />
             </div>
         );

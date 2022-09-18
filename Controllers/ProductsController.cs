@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using notebookpicker.Data;
 using notebookpicker.Models;
-using System;
 
 namespace notebookpicker.Controllers
 {
