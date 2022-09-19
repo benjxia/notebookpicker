@@ -31,8 +31,10 @@ export class Productsv2 extends Component {
   }
 
   handleFilterChange(newQuery) {
-    this.setState({query: newQuery});
-    this.populateLaptopOptions();
+    this.setState({query: newQuery}, () => {
+      this.populateLaptopOptions();
+    });
+    
   }
 
   static renderTable(options) {

@@ -34,7 +34,7 @@ export class Filters extends Component {
 
             query: queryRoot,
         };
-
+        this.handleBrandUpdate = this.handleBrandUpdate.bind(this);
         this.handleQueryUpdate = this.handleQueryUpdate.bind(this);
     }
 
@@ -113,8 +113,9 @@ export class Filters extends Component {
 
         newQuery = queryRoot + QueryFilters.toString().replace("+"," ");
 
-        this.setState({query: newQuery});
-        this.props.handleFilterChange(newQuery);
+        this.setState({query: newQuery}, () => {
+            this.props.handleFilterChange(newQuery);
+        });
     }
 
     handleBrandUpdate(newval) {
@@ -124,7 +125,7 @@ export class Filters extends Component {
     render() {
         return (
             <div>
-                <BrandFilter handleQueryUpdate={this.handleQueryUpdate}/>
+                <BrandFilter handleBrandUpdate={this.handleBrandUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
             </div>
         );
     }

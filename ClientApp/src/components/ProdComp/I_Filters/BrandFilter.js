@@ -15,15 +15,32 @@ export class BrandFilter extends Component {
             MICROSOFT: false,
             HP: false,
             ACER: false,
+            brList: [],
         };
 
         this.handleApple = this.handleApple.bind(this);
     }
 
     handleApple() {
-        this.setState({APPLE: !this.state.APPLE})
+        let curStatus = !this.state.APPLE;
+        let curList = this.state.brList;
+        this.setState({APPLE: curStatus})
         // TODO: update query string with handleBrandUpdate in parent
-        this.props.handleQueryUpdate();
+        if (curStatus === true) {
+            curList.push("APPLE");
+            this.setState({brList: curList}, () => {
+                this.props.handleBrandUpdate(this.state.brList);
+                this.props.handleQueryUpdate();
+            }); 
+        } else {
+            let idx = this.state.brList.indexOf("APPLE");
+            curList.splice(idx, 1).toString();
+            this.setState({brList: curList}, () => {
+                this.props.handleBrandUpdate(this.state.brList);
+                this.props.handleQueryUpdate();
+            });
+        }
+
     }
 
     // handleChange = (event) => {
