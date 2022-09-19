@@ -19,8 +19,8 @@ export class NavBar extends Component {
     return (
       <header>
         <Navbar className="NavigationBar" container light>
-          <NavbarBrand href="/"> <img alt="logo" src={logo} style={{ height: 50, width: 50 }} /></NavbarBrand>
-          <NavbarBrand href="/" className="button"> NotebookPicker </NavbarBrand>
+          <NavbarBrand tag = {Link} to="/"> <img alt="logo" src={logo} style={{ height: 50, width: 50 }} /></NavbarBrand>
+          <NavbarBrand tag = {Link} to="/" className="button"> NotebookPicker </NavbarBrand>
           <NavItem>
             <NavLink tag={Link} className="button" to="/products">
               Browse

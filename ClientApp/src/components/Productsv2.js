@@ -1,6 +1,6 @@
 // import { stepContentClasses } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import React, { Component } from 'react';
+import React, { useState, Component } from 'react';
 import { ProductTable } from './ProdComp/ProductTable';
 import { Filters } from './ProdComp/Filters'
 import "./styles/Productsv2.css";
@@ -20,73 +20,24 @@ export class Productsv2 extends Component {
       products: [], 
       loading: true, 
       // filter states
-      br: false, 
-      brandlist: [],
-      rel: false,
-      yrlist: [],
-      cpu: false,
-      cpulist: [],
-      gpu: false,
-      gpulist: [],
-      strtype: false,
-      strtypelist: [],
-      pantype: false,
-      pantypelist: [],
-      resolu: false,
-      resolulist: [],
-      aspratio: false,
-      aspratiolist: [],
-      minsize: 0,
-      maxsize: 20,
-      minweight: 0,
-      maxweight: 20,
-      minmem: 0,
-      maxmem: 128,
-      minss: 0,
-      maxss: 10000000,
-      search: null,
-      minprice: 0,
-      maxprice: 20000
+      query: "api/products?",
     };
+
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
   componentDidMount() {
     this.populateLaptopOptions();
   }
 
-  /**
-   * 
-   * @param {boolean} status true/false to filter by brand or not
-   * @param {Array[boolean]} brandlist true/false for each brand
-   */
-  handleBrandFilter(status, brandlist) {
-    this.setState({br: status, brandlist: brandlist})
+  handleFilterChange(newQuery) {
+    this.setState({query: newQuery});
+    this.populateLaptopOptions();
   }
-
-  handleReleaseFilter(status, yrlist) {
-    this.setState({rel: status, yrlist: yrlist})
-  }
-
-  handleCPUFilter(status, cpulist) {
-    this.setState({cpu: status, cpulist: cpulist});
-  }
-
-  handleGPUFilter(status, gpulist) {
-    this.setState({gpu: status, gpulist: gpulist});
-  }
-
-  handleStrtypeFilter(status, strtypelist) {
-    this.setState({strtype: status, strtypelist: strtypelist});
-  }
-
-  
 
   static renderTable(options) {
     return (
       <div>
-        <h1 id="tabelLabel">Select Laptops version 2</h1>
-        <div>{options.length} Compatible Laptops</div>
-        <Filters />
         <ProductTable products = {options}/>
       </div>
     );
@@ -100,15 +51,25 @@ export class Productsv2 extends Component {
       ? <div><CircularProgress /></div>
       : Productsv2.renderTable(this.state.products);
 
+    const test = {
+      br: ["APPLE", "DELL", "ASUS"],
+      cpu: ["8-Core M1 Pro", "Intel i5-1230U","M.2 NVMe SSD"],
+      rel:"2021"
+    };
+
+    // console.log(new URLSearchParams(test).toString());
     return (
       <div>
+        <h1 id="tabelLabel">Select Laptops version 2</h1>
+        <div>{this.state.products.length} Compatible Laptops</div>
+        <Filters handleFilterChange={this.handleFilterChange}/>
         {contents}
       </div>
     );
   }
 
   async populateLaptopOptions() {
-    const response = await fetch('api/products?');
+    const response = await fetch(this.state.query);
     const data = await response.json();
     this.setState({ products: data, loading: false });
   }
