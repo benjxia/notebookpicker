@@ -51,14 +51,7 @@ export class Productsv2 extends Component {
     let contents = this.state.loading
       ? <div><CircularProgress /></div>
       : Productsv2.renderTable(this.state.products);
-
-    const test = {
-      br: ["APPLE", "DELL", "ASUS"],
-      cpu: ["8-Core M1 Pro", "Intel i5-1230U","M.2 NVMe SSD"],
-      rel:"2021"
-    };
-
-    // console.log(new URLSearchParams(test).toString());
+      
     return (
       <div>
         <h1 id="tabelLabel">Select Laptops version 2</h1>
