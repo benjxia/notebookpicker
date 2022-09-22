@@ -56,49 +56,49 @@ namespace notebookpicker.Controllers
             // laptops = laptops.
             if (br != null)
             {
-                List<string> brands = br.Split("%2C").ToList();
+                List<string> brands = br.Split(",").ToList();
                 laptops = laptops.Where(x => brands.Contains(x.Brand));
             }
 
             if (rel != null)
             {
-                List<string> releases = rel.Split("%2C").ToList();
+                List<string> releases = rel.Split(",").ToList();
                 laptops = laptops.Where(x => releases.Contains(x.Release));
             }
 
             if (cpu != null)
             {
-                List<string> cpus = cpu.Split("%2C").ToList();
+                List<string> cpus = cpu.Split(",").ToList();
                 laptops = laptops.Where(x => cpus.Contains(x.Cpu));
             }
 
             if (gpu != null)
             {
-                List<string> gpus = gpu.Split("%2C").ToList();
+                List<string> gpus = gpu.Split(",").ToList();
                 laptops = laptops.Where(x => gpus.Contains(x.Gpu));
             }
             
             if (strtype != null)
             {
-                List<string> strtypes = strtype.Split("%2C").ToList();
+                List<string> strtypes = strtype.Split(",").ToList();
                 laptops = laptops.Where(x => strtypes.Contains(x.StrType));
             }
             
             if (pantype != null)
             {
-                List<string> pantypes = pantype.Split("%2C").ToList();
+                List<string> pantypes = pantype.Split(",").ToList();
                 laptops = laptops.Where(x => pantypes.Contains(x.PanelType));
             }
             
             if (resolu != null)
             {
-                List<string> resolutions = resolu.Split("%2C").ToList();
+                List<string> resolutions = resolu.Split(",").ToList();
                 laptops = laptops.Where(x => resolutions.Contains(x.Resolution));
             }
             
             if (aspratio != null)
             {
-                List<string> aspratios = aspratio.Split("%2C").ToList();
+                List<string> aspratios = aspratio.Split(",").ToList();
                 laptops = laptops.Where(x => aspratios.Contains(x.Aspratio));
             }
             

@@ -111,8 +111,6 @@ export class Filters extends Component {
             QueryFilters.append("search", this.state.search);
         }
 
-        newQuery = queryRoot + QueryFilters.toString().replace("+"," ");
-
         this.setState({query: newQuery}, () => {
             this.props.handleFilterChange(newQuery);
         });

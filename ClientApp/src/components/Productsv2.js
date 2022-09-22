@@ -34,7 +34,6 @@ export class Productsv2 extends Component {
     this.setState({query: newQuery}, () => {
       this.populateLaptopOptions();
     });
-    
   }
 
   static renderTable(options) {
