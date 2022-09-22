@@ -5,6 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import "../styles/Productsv2.css";
 
 import { BrandFilter } from './I_Filters/BrandFilter';
+import { ReleaseFilter } from './I_Filters/ReleaseFilter';
 
 const queryRoot = "api/products?";
 export class Filters extends Component {
@@ -35,6 +36,7 @@ export class Filters extends Component {
             query: queryRoot,
         };
         this.handleBrandUpdate = this.handleBrandUpdate.bind(this);
+        this.handleReleaseUpdate = this.handleReleaseUpdate.bind(this);
         this.handleQueryUpdate = this.handleQueryUpdate.bind(this);
     }
 
@@ -122,10 +124,15 @@ export class Filters extends Component {
         this.setState({br: newval});
     }
 
+    handleReleaseUpdate(newval) {
+        this.setState({rel: newval});
+    }
+
     render() {
         return (
             <div>
                 <BrandFilter handleBrandUpdate={this.handleBrandUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
+                <ReleaseFilter handleReleaseUpdate={this.handleReleaseUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
             </div>
         );
     }
