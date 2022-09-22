@@ -21,3 +21,4 @@ C# was chosen over Node for the backend because none of us enjoy using JavaScrip
 2) Connecting to Oracle Cloud
    1) Unzip the wallet package and place all of its individual files under the `/bin/Debug/net6.0` folder
    2) Place the .env file under the root directory.
+
