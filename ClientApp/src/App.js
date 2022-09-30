@@ -8,6 +8,8 @@ export default class App extends Component {
   static displayName = App.name;
 
   render() {
+    // App routes keep track of which page is rendered for the current URL
+    // See AppRoutes.js to configure routing
     return (
       <Layout>
         <Routes>

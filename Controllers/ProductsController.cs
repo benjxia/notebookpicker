@@ -20,20 +20,20 @@ namespace notebookpicker.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Http get endpoint for laptop filtering
         /// </summary>
         /// <param name="br">Brand</param>
         /// <param name="rel">Release</param>
-        /// <param name="cpu"></param>
-        /// <param name="gpu"></param>
-        /// <param name="strtype"></param>
-        /// <param name="pantype"></param>
-        /// <param name="resolu"></param>
-        /// <param name="aspratio"></param>
-        /// <param name="minsize"></param>
-        /// <param name="maxsize"></param>
-        /// <param name="minweight"></param>
-        /// <param name="maxweight"></param>
+        /// <param name="cpu">CPU</param>
+        /// <param name="gpu">GPU</param>
+        /// <param name="strtype">Storage Type</param>
+        /// <param name="pantype">Panel Type</param>
+        /// <param name="resolu">Screen Resolution</param>
+        /// <param name="aspratio">Aspect Ratio</param>
+        /// <param name="minsize">Minimum laptop size</param>
+        /// <param name="maxsize">Maximum laptop size</param>
+        /// <param name="minweight">Minimum laptop weight</param>
+        /// <param name="maxweight">Maximum laptop weight</param>
         /// <param name="minmem">Minimum memory</param>
         /// <param name="maxmem">Maximum memory</param>
         /// <param name="minss">Minimum storage size</param>
@@ -53,7 +53,7 @@ namespace notebookpicker.Controllers
 
         {
             IQueryable<Laptop> laptops = _context.Laptops.Include(l => l.Nbsellers).AsQueryable();
-            // laptops = laptops.
+            // Filter laptops to only laptops that match all filters
             if (br != null)
             {
                 List<string> brands = br.Split(",").ToList();

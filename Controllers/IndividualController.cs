@@ -19,6 +19,12 @@ public class IndividualController : ControllerBase
         _context = context;
     }
 
+    /// <summary>
+    /// Http get endpoint for individual products
+    /// get api/product?id=##########
+    /// </summary>
+    /// <param name="id">ID of laptop to find</param>
+    /// <returns>Information for laptop with given ID</returns>
     [HttpGet]
     public Laptop Get(string id)
     {

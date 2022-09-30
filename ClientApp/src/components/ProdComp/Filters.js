@@ -13,6 +13,8 @@ export class Filters extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // See ProductsController.cs for abbreviation definitions
+            // List of strings of valid brands, releases, cpus, etc.
             br: [], 
             rel: [],
             cpu: [],
@@ -32,7 +34,7 @@ export class Filters extends Component {
             search: "",
             minprice: 0,
             maxprice: 20000,
-
+            // HTTP get query as string
             query: queryRoot,
         };
         this.handleBrandUpdate = this.handleBrandUpdate.bind(this);
@@ -40,10 +42,13 @@ export class Filters extends Component {
         this.handleQueryUpdate = this.handleQueryUpdate.bind(this);
     }
 
+    /**
+     * When query needs to be updated, update query state and call Productsv2 to update its stuff
+     */
     handleQueryUpdate() {
         let newQuery = "api/products?";
         let QueryFilters = new URLSearchParams();
-        // delete later
+        // Convert filter states into a coherent HTTP "get" query.
         console.log(this.state.query);
         if (this.state.br != null && this.state.br.length > 0) {
             QueryFilters.append("br", this.state.br.toString());
@@ -120,10 +125,18 @@ export class Filters extends Component {
         });
     }
 
+    /**
+     * Callback function for brandfilter component updates
+     * @param {*} newval 
+     */
     handleBrandUpdate(newval) {
         this.setState({br: newval});
     }
 
+    /**
+     * Callback function for releasefilter component updates
+     * @param {*} newval 
+     */
     handleReleaseUpdate(newval) {
         this.setState({rel: newval});
     }

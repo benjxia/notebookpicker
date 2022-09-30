@@ -17,9 +17,9 @@ export class Productsv2 extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      products: [], 
-      loading: true, 
-      // filter states
+      products: [], // List of products
+      loading: true,
+      // Current HTTP query for filtering
       query: "api/products?",
     };
 
@@ -30,6 +30,10 @@ export class Productsv2 extends Component {
     this.populateLaptopOptions();
   }
 
+  /**
+   * Update filter query and replace table with updated laptops
+   * @param {String} newQuery 
+   */
   handleFilterChange(newQuery) {
     this.setState({query: newQuery}, () => {
       this.populateLaptopOptions();
@@ -62,6 +66,9 @@ export class Productsv2 extends Component {
     );
   }
 
+  /**
+   * Use query state to populate laptop table with options
+   */
   async populateLaptopOptions() {
     const response = await fetch(this.state.query);
     const data = await response.json();

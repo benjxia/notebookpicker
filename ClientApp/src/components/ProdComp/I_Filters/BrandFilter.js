@@ -15,17 +15,19 @@ export class BrandFilter extends Component {
             MICROSOFT: false,
             HP: false,
             ACER: false,
-            brList: [],
+            brList: [], // list of strings of qualifying brands
         };
 
         this.handleApple = this.handleApple.bind(this);
     }
 
+    /**
+     * Update brList for Apple checkbox changes
+     */
     handleApple() {
         let curStatus = !this.state.APPLE;
         let curList = this.state.brList;
         this.setState({APPLE: curStatus})
-        // TODO: update query string with handleBrandUpdate in parent
         if (curStatus === true) {
             curList.push("APPLE");
             this.setState({brList: curList}, () => {
@@ -42,7 +44,9 @@ export class BrandFilter extends Component {
         }
 
     }
-
+    /**
+     * Update brList for Dell checkbox changes
+     */
     handleDell() {
         let curStatus = !this.state.DELL;
         let curList = this.state.brList;
