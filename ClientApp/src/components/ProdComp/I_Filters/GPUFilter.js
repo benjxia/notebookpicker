@@ -5,63 +5,49 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 // import "../styles/Productsv2.css";
 
-//not finished lol
-
 export class GPUFilter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TWENTYONE: false,
-            TWENTYTWO: false,
-            relList: [],
+            IG14Core: false,
+            IG8Core: false,
+            RTX3060ti: false,
+            IrisXeNorm: false,
+            IrisXeG7: false,
+            Radeon: false,
+            gpuList: [],
         };
 
-        this.handleTwentyOne = this.handleTwentyOne.bind(this);
+        this.handleGPUType = this.handleGPUType.bind(this);
     }
 
-    handleTwentyOne() {
-        let curStatus = !this.state.TWENTYONE;
-        let curList = this.state.relList;
-        this.setState({TWENTYONE: curStatus})
+    handleGPUType(gpuVar, name) {
+        let curStatus = !this.state[gpuVar];
+        let curList = this.state.gpuList;
+        this.setState({[gpuVar]: curStatus})
         if (curStatus === true) {
-            curList.push("2021");
-            this.setState({relList: curList}, () => {
-                this.props.handleReleaseUpdate(this.state.relList);
+            curList.push(name);
+            this.setState({gpuList: curList}, () => {
+                this.props.handleGPUUpdate(this.state.gpuList);
             }); 
         } else {
-            let idx = this.state.relList.indexOf("TWENTYONE");
+            let idx = this.state.gpuList.indexOf(gpuVar);
             curList.splice(idx, 1).toString();
-            this.setState({relList: curList}, () => {
-                this.props.handleReleaseUpdate(this.state.relList);
-            });
-        }
-
-    }
-
-    handleTwentyTwo() {
-        let curStatus = !this.state.TWENTYTWO;
-        let curList = this.state.relList;
-        this.setState({TWENTYTWO: curStatus})
-        if (curStatus === true) {
-            curList.push("2022");
-            this.setState({relList: curList}, () => {
-                this.props.handleReleaseUpdate(this.state.relList);
-            }); 
-        } else {
-            let idx = this.state.relList.indexOf("TWENTYTWO");
-            curList.splice(idx, 1).toString();
-            this.setState({relList: curList}, () => {
-                this.props.handleReleaseUpdate(this.state.relList);
+            this.setState({gpuList: curList}, () => {
+                this.props.handleGPUUpdate(this.state.gpuList);
             });
         }
     }
-
     render() {
         return (
             <FormGroup>
-                <FormLabel component="legend">Release Year</FormLabel>
-                <FormControlLabel control={<Checkbox checked={this.state.TWENTYONE} onChange = {() => this.handleTwentyOne()} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="2021" />
-                <FormControlLabel control={<Checkbox checked={this.state.TWENTYTWO} onChange = {() => this.handleTwentyTwo()} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="2022" />
+                <FormLabel component="legend">GPU</FormLabel>
+                <FormControlLabel control={<Checkbox checked={this.state.IG14Core} onChange = {() => this.handleGPUType("IG14Core", "14-Core Integrated Graphics")} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="14-Core Integrated Graphics" />
+                <FormControlLabel control={<Checkbox checked={this.state.IG8Core} onChange = {() => this.handleGPUType("IG8Core", "8-Core Integrated Graphics")} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="8-Core Integrated Graphics" />
+                <FormControlLabel control={<Checkbox checked={this.state.RTX3060ti} onChange = {() => this.handleGPUType("RTX3060ti", "GeForce RTX 3060 Ti")} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="GeForce RTX 3060 Ti" />
+                <FormControlLabel control={<Checkbox checked={this.state.IrisXeNorm} onChange = {() => this.handleGPUType("IrisXeNorm", "Iris Xe Graphics")} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="Iris Xe Graphics" />
+                <FormControlLabel control={<Checkbox checked={this.state.IrisXeG7} onChange = {() => this.handleGPUType("IrisXeG7", "Iris Xe Graphics G7")} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="Irix Xe Graphics G7" />
+                <FormControlLabel control={<Checkbox checked={this.state.Radeon} onChange = {() => this.handleGPUType("Radeon", "Radeon Graphics")} sx={{ '& .MuiSvgIcon-root': { fontSize: 15 } }}/>} label="Radeon Graphics" />
             </FormGroup>
         );
     }

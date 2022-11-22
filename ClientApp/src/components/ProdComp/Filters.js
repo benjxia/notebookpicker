@@ -6,6 +6,10 @@ import "../styles/Productsv2.css";
 
 import { BrandFilter } from './I_Filters/BrandFilter';
 import { ReleaseFilter } from './I_Filters/ReleaseFilter';
+import { CPUFilter } from './I_Filters/CPUFilter';
+import { GPUFilter } from './I_Filters/GPUFilter';
+import { MemoryFilter } from './I_Filters/MemoryFilter';
+
 
 const queryRoot = "api/products?";
 export class Filters extends Component {
@@ -39,6 +43,8 @@ export class Filters extends Component {
         };
         this.handleBrandUpdate = this.handleBrandUpdate.bind(this);
         this.handleReleaseUpdate = this.handleReleaseUpdate.bind(this);
+        this.handleCPUUpdate = this.handleCPUUpdate.bind(this);
+        this.handleGPUUpdate = this.handleGPUUpdate.bind(this);
         this.handleQueryUpdate = this.handleQueryUpdate.bind(this);
     }
 
@@ -60,6 +66,10 @@ export class Filters extends Component {
 
         if (this.state.cpu !== null && this.state.cpu.length > 0) {
             QueryFilters.append("cpu", this.state.cpu.toString());
+        }
+
+        if (this.state.gpu !== null && this.state.gpu.length > 0) {
+            QueryFilters.append("gpu", this.state.gpu.toString());
         }
 
         if (this.state.pantype !== null && this.state.gpu.length > 0) {
@@ -119,7 +129,7 @@ export class Filters extends Component {
         }
 
         newQuery = queryRoot + QueryFilters.toString();
-        console.log(newQuery);
+        //console.log(newQuery);
 
         this.setState({query: newQuery}, () => {
             this.props.handleFilterChange(newQuery);
@@ -143,11 +153,39 @@ export class Filters extends Component {
         this.setState({rel: newval}, () => this.handleQueryUpdate());
     }
 
+    /**
+     * Callback function for CPUfilter component updates
+     * @param {*} newval
+     */
+    handleCPUUpdate(newval) {
+        this.setState({cpu: newval}, () => this.handleQueryUpdate());
+    }
+    
+     /**
+     * Callback function for GPUfilter component updates
+     * @param {*} newval
+     */
+    handleGPUUpdate(newval) {
+        this.setState({gpu: newval}, () => this.handleQueryUpdate());
+    }
+
+     /**
+     * Callback function for Memory component updates
+     * @param {*} newval
+     */
+    handleMemoryUpdate(minval, maxval) {
+        this.setState({minmem: minval, maxmem: maxval}, () => this.handleQueryUpdate());
+        console.log(minval + " " + maxval);
+    }
+
     render() {
         return (
             <div>
                 <BrandFilter handleBrandUpdate={this.handleBrandUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
                 <ReleaseFilter handleReleaseUpdate={this.handleReleaseUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
+                <CPUFilter handleCPUUpdate={this.handleCPUUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
+                <GPUFilter handleGPUUpdate={this.handleGPUUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
+                <MemoryFilter handleMemoryUpdate={this.handleMemoryUpdate} handleQueryUpdate={this.handleQueryUpdate}/>
             </div>
         );
     }
