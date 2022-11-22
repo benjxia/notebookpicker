@@ -50,67 +50,67 @@ export class Filters extends Component {
         let QueryFilters = new URLSearchParams();
         // Convert filter states into a coherent HTTP "get" query.
         console.log(this.state.query);
-        if (this.state.br != null && this.state.br.length > 0) {
+        if (this.state.br !== null && this.state.br.length > 0) {
             QueryFilters.append("br", this.state.br.toString());
         }
 
-        if (this.state.rel != null && this.state.rel.length > 0) {
+        if (this.state.rel !== null && this.state.rel.length > 0) {
             QueryFilters.append("rel", this.state.rel.toString());
         }
 
-        if (this.state.cpu != null && this.state.cpu.length > 0) {
+        if (this.state.cpu !== null && this.state.cpu.length > 0) {
             QueryFilters.append("cpu", this.state.cpu.toString());
         }
 
-        if (this.state.pantype != null && this.state.gpu.length > 0) {
+        if (this.state.pantype !== null && this.state.gpu.length > 0) {
             QueryFilters.append("pantype", this.state.pantype.toString());
         }
 
-        if (this.state.resolu != null && this.state.resolu.length > 0) {
+        if (this.state.resolu !== null && this.state.resolu.length > 0) {
             QueryFilters.append("resolu", this.state.resolu.toString());
         }
 
-        if (this.state.aspratio != null && this.state.aspratio.length > 0) {
+        if (this.state.aspratio !== null && this.state.aspratio.length > 0) {
             QueryFilters.append("aspratio", this.state.aspratio.toString());
         }
 
-        if (this.state.minsize != 0) {
+        if (this.state.minsize !== 0) {
             QueryFilters.append("minsize", this.state.minsize);
         }
 
-        if (this.state.maxsize != 20) {
+        if (this.state.maxsize !== 20) {
             QueryFilters.append("maxsize", this.state.maxsize);
         }
 
-        if (this.state.minweight != 0) {
+        if (this.state.minweight !== 0) {
             QueryFilters.append("minweight", this.state.minweight);
         }
 
-        if (this.state.maxweight != 20) {
+        if (this.state.maxweight !== 20) {
             QueryFilters.append("maxweight", this.state.maxweight);
         }
 
-        if (this.state.minmem != 0) {
+        if (this.state.minmem !== 0) {
             QueryFilters.append("minmem", this.state.minmem);
         }
 
-        if (this.state.maxmem != 128) {
+        if (this.state.maxmem !== 128) {
             QueryFilters.append("maxmem", this.state.maxmem);
         }
 
-        if (this.state.minss != 0) {
+        if (this.state.minss !== 0) {
             QueryFilters.append("minss", this.state.minss);
         }
 
-        if (this.state.maxss != 10000000) {
+        if (this.state.maxss !== 10000000) {
             QueryFilters.append("maxss", this.state.maxss);
         }
 
-        if (this.state.minprice != 0) {
+        if (this.state.minprice !== 0) {
             QueryFilters.append("minprice", this.state.minprice);
         }
 
-        if (this.state.maxprice != 20000) {
+        if (this.state.maxprice !== 20000) {
             QueryFilters.append("maxprice", this.state.maxprice);
         }
 
@@ -119,6 +119,7 @@ export class Filters extends Component {
         }
 
         newQuery = queryRoot + QueryFilters.toString();
+        console.log(newQuery);
 
         this.setState({query: newQuery}, () => {
             this.props.handleFilterChange(newQuery);
@@ -130,7 +131,8 @@ export class Filters extends Component {
      * @param {*} newval 
      */
     handleBrandUpdate(newval) {
-        this.setState({br: newval});
+        this.setState({br: newval}, () => this.handleQueryUpdate());
+        
     }
 
     /**
@@ -138,7 +140,7 @@ export class Filters extends Component {
      * @param {*} newval 
      */
     handleReleaseUpdate(newval) {
-        this.setState({rel: newval});
+        this.setState({rel: newval}, () => this.handleQueryUpdate());
     }
 
     render() {

@@ -7,8 +7,8 @@ export class Home extends Component {
   render() {
     return (
       <div>
-        <h1> Wassup mothafuckas! </h1>
-        <p> In life, there exists only pain, only suffering </p>
+        <h1> ni hao ma! </h1>
+        <p> Get hijacked</p>
       </div>
     );
   }

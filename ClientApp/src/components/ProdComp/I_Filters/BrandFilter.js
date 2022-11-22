@@ -32,14 +32,12 @@ export class BrandFilter extends Component {
             curList.push("APPLE");
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             }); 
         } else {
             let idx = this.state.brList.indexOf("APPLE");
             curList.splice(idx, 1).toString();
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             });
         }
 
@@ -55,14 +53,12 @@ export class BrandFilter extends Component {
             curList.push("DELL");
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             }); 
         } else {
             let idx = this.state.brList.indexOf("DELL");
             curList.splice(idx, 1).toString();
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             });
         }
     }
@@ -75,14 +71,12 @@ export class BrandFilter extends Component {
             curList.push("ASUS");
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             }); 
         } else {
             let idx = this.state.brList.indexOf("ASUS");
             curList.splice(idx, 1).toString();
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             });
         }
     }
@@ -95,14 +89,12 @@ export class BrandFilter extends Component {
             curList.push("MICROSOFT");
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             }); 
         } else {
             let idx = this.state.brList.indexOf("MICROSOFT");
             curList.splice(idx, 1).toString();
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             });
         }
     }
@@ -115,14 +107,12 @@ export class BrandFilter extends Component {
             curList.push("HP");
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             }); 
         } else {
             let idx = this.state.brList.indexOf("HP");
             curList.splice(idx, 1).toString();
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             });
         }
     }
@@ -135,14 +125,12 @@ export class BrandFilter extends Component {
             curList.push("ACER");
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             }); 
         } else {
             let idx = this.state.brList.indexOf("ACER");
             curList.splice(idx, 1).toString();
             this.setState({brList: curList}, () => {
                 this.props.handleBrandUpdate(this.state.brList);
-                this.props.handleQueryUpdate();
             });
         }
     }

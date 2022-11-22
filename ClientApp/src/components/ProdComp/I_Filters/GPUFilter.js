@@ -5,7 +5,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 // import "../styles/Productsv2.css";
 
-export class ReleaseFilter extends Component {
+//not finished lol
+
+export class GPUFilter extends Component {
     constructor(props) {
         super(props);
         this.state = {
