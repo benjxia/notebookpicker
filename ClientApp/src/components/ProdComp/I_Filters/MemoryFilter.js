@@ -1,78 +1,87 @@
-
 import React, { Component } from 'react';
 import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
-import { Slider } from '@mui/material';
-import { useState } from 'react';
 
 // import "../styles/Productsv2.css";
 
 // cool slider stuff doesnt work yet
+// therefore using forms instead for now
 
 export class MemoryFilter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            GBval: [],
-            memList: [],
+            minVal: 0,
+            maxVal: 128,
         };
-        this.handleMemType = this.handleMemType.bind(this);
+        this.handleMinChange = this.handleMinChange.bind(this);
+        this.handleMaxChange = this.handleMaxChange.bind(this);
+        //this.handleMaxMemory = this.handleMaxMemory.bind(this);
+        //this.handleMinMemory = this.handleMinMemory.bind(this);
+
     }
 
+    handleMinChange(event) {
+        if (!/[0-9]/.test(event.key)) {
+            event.preventDefault();
+            this.setState({ minVal: 0});
+        }
+        if((event.target.value <= 128 && event.target.value >= 0) || !event.target.value) {
+            this.setState({ minVal: event.target.value },
+                () => {
+                    //this.props.handleMemoryUpdate(this.state.minVal, this.state.maxVal)
+                });
+        } else {
+            this.setState({ minVal: 0},
+            () => {
+                //this.props.handleMemoryUpdate(this.state.minVal, this.state.maxVal)
+                alert("min value must be greater than or equal to 0 and min must be a number");
+            });
+        }
+    }
+    handleMaxChange(event) {
+        if (!/[0-9]/.test(event.key)) {
+            event.preventDefault();
+            this.setState({ maxVal: 128});
+        }
+        if((event.target.value >= 0 && event.target.value <= 128)  || !event.target.value) {
+            this.setState({ maxVal: event.target.value },
+                () => {
+                    //this.props.handleMemoryUpdate(this.state.minVal, this.state.maxVal)
+                });
+        } else {
+            this.setState({ maxVal: 128},
+            () => {
+                //this.props.handleMemoryUpdate(this.state.minVal, this.state.maxVal)
+                alert("max value must be less than or equal to 128 and max must be a number");
+            });
+        }
+    }
 
-    handleMemType() {
-        let min = this.GBval[0];
-        let max = this.GBval[1];
-        this.setState({GBval: [min, max]});
-        if(min !== 0 || max !== 128) {
-            this.props.handleMemoryUpdate(min, max);
-        }
-        console.log(this.state.GBval[0]);
-        /*
-        this.props,handleMemoryUpdate(this.state.)
-        let curList = this.state.memList;
-        if (min <= 8 && max >= 8) {
-            curList.push(8);
-            this.setState({memList: curList}, () => {
-                this.props.handleMemoryUpdate(this.state.memList);
-            }); 
+    handleMemory() {
+        console.log(this.state.minVal + " " + this.state.maxVal);
+        if(Number(this.state.minVal) > Number(this.state.maxVal)) {
+            alert("min value is greater than max value");
+            this.setState({minVal: 0, maxVal: 128});
         } else {
-            let idx = this.state.memList.indexOf(8);
-            curList.splice(idx, 1).toString();
-            this.setState({memList: curList}, () => {
-                this.props.handleMemoryUpdate(this.state.memList);
-            });
+            this.props.handleMemoryUpdate(this.state.minVal, this.state.maxVal);
         }
-        if(min <= 16 && max >= 16) {
-            curList.push(8);
-            this.setState({memList: curList}, () => {
-                this.props.handleMemoryUpdate(this.state.memList);
-            }); 
-        } else {
-            let idx = this.state.memList.indexOf(16);
-            curList.splice(idx, 1).toString();
-            this.setState({memList: curList}, () => {
-                this.props.handleMemoryUpdate(this.state.memList);
-            });
-        }
-        */
     }
     render() {
         return (
             <FormGroup>
-                <FormLabel component="legend">Memory</FormLabel>
-                <Slider
-                value={this.state.GBval}
-                getAriaLabel={() => 'Memory range'}
-                valueLabelDisplay="on"
-                step={2}
-                style={{ width: 128 }}
-                aria-labelledby="range-slider"
-                marks
-                min={0}
-                max={128}
-                onChange={() => this.handleMemType()}
-                />
+                <form onSubmit={this.handleMemory}>
+                    <label>
+                        Min Memory:
+                        <input type="text" value={this.state.minVal} onChange={this.handleMinChange} />
+                    </label>
+                </form>
+                <form onSubmit={this.handleMemory}>
+                    <label>
+                        Max Memory:
+                        <input type="text" value={this.state.maxVal} onChange={this.handleMaxChange} />
+                    </label>
+                    <button onClick={()=>this.handleMemory()} type='button'>submit</button> 
+                </form>
             </FormGroup>
         );
     }

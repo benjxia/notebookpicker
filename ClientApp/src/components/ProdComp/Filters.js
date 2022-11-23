@@ -46,6 +46,7 @@ export class Filters extends Component {
         this.handleCPUUpdate = this.handleCPUUpdate.bind(this);
         this.handleGPUUpdate = this.handleGPUUpdate.bind(this);
         this.handleQueryUpdate = this.handleQueryUpdate.bind(this);
+        this.handleMemoryUpdate = this.handleMemoryUpdate.bind(this);
     }
 
     /**
@@ -175,7 +176,6 @@ export class Filters extends Component {
      */
     handleMemoryUpdate(minval, maxval) {
         this.setState({minmem: minval, maxmem: maxval}, () => this.handleQueryUpdate());
-        console.log(minval + " " + maxval);
     }
 
     render() {
